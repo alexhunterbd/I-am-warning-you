@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Sentinel Bangladesh</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: 'Courier New', monospace;
+    color: #00ffe5;
+    overflow: hidden;
+}
+
+/* Matrix Background */
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+/* Logo - Circular + Glow */
+#logo {
+    display: block;
+    margin: 30px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%; /* Circular */
+    object-fit: cover;
+    animation: logoGlow 2s infinite alternate;
+}
+@keyframes logoGlow {
+    0% { filter: drop-shadow(0 0 10px #00ffe5); }
+    50% { filter: drop-shadow(0 0 25px #00ffe5); }
+    100% { filter: drop-shadow(0 0 40px #00ffe5); }
+}
+
+/* Typing Box */
+#box {
+    position: relative;
+    max-width: 800px;
+    width: 80%;
+    margin: 20px auto 10px auto;
+    padding: 30px;
+    border: 2px solid #00ffe5;
+    border-radius: 15px;
+    box-shadow: 0 0 40px #00ffe5;
+    background: rgba(0,0,0,0.5);
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: left;
+    min-height: 200px;
+    overflow: hidden;
+}
+#out { white-space: pre-wrap; }
+
+/* Facebook Box - Yellow Glow */
+#fb-box {
+    max-width: 250px;
+    width: 70%;
+    margin: 30px auto;
+    padding: 12px 15px;
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #FFD700;
+    background: rgba(0,0,0,0.35);
+    text-align: center;
+    color: #FFD700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+#fb-box a {
+    color: #FFD700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+#fb-box a:hover {
+    color: #FFFF33;
+    text-shadow: 0 0 15px #FFFF33;
+}
+#fb-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    filter: drop-shadow(0 0 5px #FFD700);
+    transition: all 0.3s ease;
+}
+#fb-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive */
+@media screen and (max-width: 600px){
+    #box { font-size: 16px; padding: 20px; }
+    #fb-box { font-size: 14px; padding: 10px; }
+    #logo { width: 140px; height: 140px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<!-- Logo -->
+<img id="logo" src="https://a.top4top.io/p_3624uj0nd5.jpg" alt="Logo"/>
+
+<!-- Typing Box -->
+<div id="box">
+    <div id="out"></div>
+</div>
+
+<!-- Facebook Box -->
+<div id="fb-box">
+    <a href="https://www.facebook.com/share/1Xq35NHx5J/" target="_blank">
+        <img id="fb-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook"/>
+        ALEX HUNTER
+    </a>
+</div>
+
+<script>
+// Matrix Effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+const fontSize = 12;
+const columns = canvas.width / fontSize;
+let drops = [];
+for (let i = 0; i < columns; i++) drops[i] = 1;
+
+setInterval(() => {
+    ctx.fillStyle = 'rgba(0,0,0,0.07)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ffe5';
+    ctx.font = fontSize + 'px Courier';
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+}, 35);
+
+// Typing System (3-line, no loop)
+const displayText =        				    `আসাল্লামু আলাইকুম.....👀
+এই একাউন্ট থেকে অন্যায় কাজ করার জন্য CYBER SENTINEL BANGLADESH এর পক্ষ থেকে ACTION নেওয়া হলো!🥱☠️ : ALEX HUNTER.... (TEAM CSB)....`;
+
+const outDiv = document.getElementById('out');
+const allLines = displayText.split('\n');
+let index = 0;
+
+function typeLines() {
+    let linesToShow = [];
+    for (let i = 0; i < 3; i++) {
+        if (index + i < allLines.length) linesToShow.push(allLines[index + i]);
+    }
+    outDiv.textContent = '';
+    let charIndex = 0;
+    const fullText = linesToShow.join('\n');
+
+    function typeChar() {
+        if (charIndex < fullText.length) {
+            outDiv.textContent = fullText.slice(0, charIndex + 1);
+            charIndex++;
+            setTimeout(typeChar, 45);
+        }
+    }
+    typeChar();
+}
+
+typeLines();
+</script>
+</body>
+</html>
